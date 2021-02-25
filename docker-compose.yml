@@ -7,7 +7,57 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./app:/app
+      - ./data/app:/app
     command: sh -c "python manage.py runserver 0.0.0.0:8000"
     environment:
-      - DEBUG=1
+      - DEBUG=1 #if prod debug = 0
+      - SECRET_KEY=samplesecret123
+      - ALLOWED_HOSTS=127.0.0.1,localhost  
+    networks:
+      - app-network
+    restart: unless-stopped
+    depends_on:
+        - db
+  myadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+        - "8001:80"
+    environment:
+        - PMA_ARBITRARY=1
+        - PMA_HOST=${MYSQL_HOST}
+    restart: unless-stopped
+    depends_on:
+        - db
+    networks:
+      - app-network
+  # proxy:
+  #   build:
+  #     context: ./data/proxy
+  #   volumes:
+  #     - ./data/proxy/web:/vol/static
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - app
+  db:
+    image: mariadb:${MYSQL_VERSION}
+    container_name: ${MYSQL_HOST}
+    restart: unless-stopped
+    env_file:
+        - ".env"
+    environment:
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+        - "./data/db/mysql:/var/lib/mysql"
+    command: '--default-authentication-plugin=mysql_native_password'
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge

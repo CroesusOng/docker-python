@@ -1,2 +1,40 @@
-Django>=3.0.6,<3.1
+# django
+Django>=3.0.6,<4
+django-cors-headers==3.5.0
+django-rest-auth==0.9.5
+django-filter>=2
+
 uWSGI>=2.0.18,<2.1
+
+# django-rest-framework
+djangorestframework==3.12.1
+djangorestframework-filters==1.0.0.dev2
+django-restql==0.11.0
+
+# database
+mysqlclient==2.0.1
+
+# asgi
+uvicorn[standard]
+
+# websocket
+websocket_client
+
+# utility
+python-decouple==3.3
+ConcurrentLogHandler==0.9.1
+python-dateutil
+
+
+# celery
+celery==4.4.7
+django-celery-beat
+django-celery-results
+flower
+
+# debug
+django-silk
+
+#unicorn common
+unicorn_common-0.2.9.tar.gz
+django-redis
