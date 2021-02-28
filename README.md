@@ -47,3 +47,8 @@ DEBUG=1
 SECRET_KEY=secret1234
 ALLOWED_HOSTS=127.0.0.1,localhost  
 ```
+
+#1.28 version got problem for docker compose build
+```
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
