@@ -4,7 +4,8 @@ ENV PATH="/scripts:${PATH}"
 
 COPY ./unicorn_common-0.2.9.tar.gz /unicorn_common-0.2.9.tar.gz
 COPY ./requirements.txt /requirements.txt
-RUN apk add --update --no-cache --virtual .tmp gcc libc-dev linux-headers mariadb-dev mysql-client build-base
+RUN apk add --update --no-cache --virtual .tmp gcc libc-dev linux-headers mysql-client build-base mariadb-connector-c-dev 
+#mariadb-dev 
 RUN pip install -r /requirements.txt
 RUN apk del .tmp
 

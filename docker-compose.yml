@@ -4,15 +4,18 @@ services:
   app:
     build:
       context: . 
+    image: python-django:3.8
     ports:
       - "8000:8000"
     volumes:
       - ./data/app:/app
     command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    env_file:
+        - ".env"
     environment:
-      - DEBUG=1 #if prod debug = 0
-      - SECRET_KEY=samplesecret123
-      - ALLOWED_HOSTS=127.0.0.1,localhost  
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
     networks:
       - app-network
     restart: unless-stopped
@@ -23,6 +26,8 @@ services:
     container_name: phpmyadmin
     ports:
         - "8001:80"
+    env_file:
+        - ".env"
     environment:
         - PMA_ARBITRARY=1
         - PMA_HOST=${MYSQL_HOST}
