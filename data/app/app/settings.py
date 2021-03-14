@@ -9,12 +9,21 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-import os
+
+from pathlib import Path
+
 import pymysql
 pymysql.version_info = (1, 4, 13, "final", 0)
 pymysql.install_as_MySQLdb()
 
-from pathlib import Path
+
+import os
+DEBUG = bool(int(os.environ.get('DEBUG', 0)))
+
+ALLOWED_HOSTS = []
+ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS')
+if ALLOWED_HOSTS_ENV:
+    ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,16 +33,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'ug#rtna^i4h!!e$m7j3n#-kvv5c2s2!')
+SECRET_KEY = 'bwa4k-k%8olry7-os1*(a%^03vjvpll$rk2uhp)sq)#h8wc#!0'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = bool(int(os.environ.get('DEBUG', 0)))
-
-ALLOWED_HOSTS = []
-ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS')
-if ALLOWED_HOSTS_ENV:
-    ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
 
 
 # Application definition
@@ -83,18 +84,9 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'db',
-        'PORT': '3306',
-        'NAME': 'test',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'default-character-set': 'utf8',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
 }
 
 
@@ -135,3 +127,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')

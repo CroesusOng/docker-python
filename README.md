@@ -3,11 +3,18 @@
 # start a new project 
 ```
 docker run -it -v ${PWD}/data:/app python-django:3.8 django-admin startproject app
+
 ```
 # docker compose run also can start a project but local folder need mv up 1 level
 ```
-sudo docker-compose run app python manage.py startapp app
+sudo docker-compose run app python manage.py startapp drftest
 ```
+
+```
+sudo docker-compose run app python manage.py migrate
+sudo docker-compose run app python manage.py createsuperuser
+```
+
 
 setting.py
 ```
@@ -19,6 +26,9 @@ pymysql.install_as_MySQLdb()
 get env value 
 ```
 import os
+
+SECRET_KEY = os.environ.get('SECRET_KEY', 'change_secret_key')
+
 DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
 ALLOWED_HOSTS = []
