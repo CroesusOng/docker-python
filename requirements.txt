@@ -25,7 +25,7 @@ websocket_client
 python-decouple==3.3
 ConcurrentLogHandler==0.9.1
 python-dateutil
-
+beautifulsoup4
 
 # celery
 celery==4.4.7
