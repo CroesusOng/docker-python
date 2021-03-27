@@ -13,6 +13,7 @@ sudo docker-compose run app python manage.py startapp drftest
 ```
 sudo docker-compose run app python manage.py migrate
 sudo docker-compose run app python manage.py createsuperuser
+sudo docker-compose run app python manage.py collectstatic
 ```
 
 
