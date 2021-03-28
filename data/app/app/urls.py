@@ -19,12 +19,8 @@ from django.conf.urls import include, url
 
 
 urlpatterns = [
-    # url(r'^ss/$', hello_world),
-    # url(r'^index/$', index),
-    # url(r'^index2/$', index2),
-    # url('', index2),
     path('admin/', admin.site.urls),
     path('ss/', include('ss.urls')),
     path('api/', include('ss.urls')),
-    path('api/', include('ss.urls')),
+    path('', include('ss.urls')),
 ]
