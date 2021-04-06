@@ -1,6 +1,14 @@
 version: '3.7'
 
 services:
+  cron:
+    build:
+      context: . 
+      dockerfile: Dockerfile-cron
+    command: crond -f -l 8
+    restart: unless-stopped
+    networks:
+      - app-network
   redis:
     image: 'redis:latest'
     env_file:
@@ -9,6 +17,7 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     command: >
       --requirepass ${REDIS_PASSWORD} 
+    restart: unless-stopped
     networks:
       - app-network
   app:
